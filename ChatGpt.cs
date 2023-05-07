@@ -29,6 +29,7 @@ namespace ChatGptApi
             this.question = question;
             request = new ChatGptRequest(question);
             response = await _httpClient.PostAsJsonAsync<ChatGptRequest>(chatCompletionUrl, request);
+            response.EnsureSuccessStatusCode();
             chatGptResponse = await response.Content.ReadFromJsonAsync<ChatGptResponse>();
             return chatGptResponse.Choices[0].Message.Content;
         }
